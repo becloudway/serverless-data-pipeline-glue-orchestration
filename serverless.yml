@@ -7,7 +7,7 @@ plugins:
   - serverless-prune-plugin
 
 custom:
-  crawlerName: anpr-parquet-step1-crawler
+  crawlerName: parquet-crawler
   lumigo:
     token: ${ssm:/lumigo/token}
     nodePackageManager: npm
@@ -51,7 +51,7 @@ functions:
     handler: src/StartGlueETLJob/handler.handle
     timeout: 15
     environment:
-      ETL_JOB_NAME: anpr_parquet_testscript_david_03JUN20
+      ETL_JOB_NAME: repartition_job
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: "Allow"
