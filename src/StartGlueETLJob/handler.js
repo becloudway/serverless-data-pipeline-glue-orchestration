@@ -10,6 +10,7 @@ module.exports.handle = async event => {
     NumberOfWorkers: 1,
     WorkerType: 'Standard'
   };
+
   return glue.startJobRun(params).promise()
 
 };
