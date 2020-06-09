@@ -1,4 +1,4 @@
-# Serverless data pipelines glue orchestration service
+# Serverless data pipelines AWS Glue orchestration service
 
 Orchestrating your data processing flow with Lambda.
 > TL-DR; Service to trigger a Glue Crawler and run Glue ETL job on completion of the crawler.
