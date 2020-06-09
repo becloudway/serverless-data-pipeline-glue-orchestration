@@ -7,6 +7,7 @@ plugins:
   - serverless-prune-plugin
 
 custom:
+  crawlerName: anpr-parquet-step1-crawler
   lumigo:
     token: ${ssm:/lumigo/token}
     nodePackageManager: npm
@@ -31,10 +32,10 @@ provider:
 
 functions:
   startGlueCrawler:
-    handler: handler.hello
-    timeout: 5
+    handler: src/StartGlueCrawler/handler.handle
+    timeout: 15
     environment:
-      CRAWLER_NAME: anpr-parquet-step1-crawler
+      CRAWLER_NAME: ${self:custom.crawlerName}
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: "Allow"
@@ -46,4 +47,27 @@ functions:
       - schedule:
           rate: cron(15 * * * ? *)
           enabled: true
-
+  startGlueETLJob:
+    handler: src/StartGlueETLJob/handler.handle
+    timeout: 15
+    environment:
+      ETL_JOB_NAME: anpr_parquet_testscript_david_03JUN20
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - glue:StartJobRun
+        Resource:
+          - "*"
+    events:
+      - eventBridge:
+          pattern:
+            source:
+              - aws.glue
+            detail-type:
+              - Glue Crawler State Change
+            detail:
+              crawlerName:
+                - ${self:custom.crawlerName}
+              state:
+                - Succeeded
