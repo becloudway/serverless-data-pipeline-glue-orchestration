@@ -1,0 +1,18 @@
+{
+  "name": "serverless-data-pipelines-glue-orchestration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nxtra",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-iam-roles-per-function": "^2.0.2",
+    "serverless-lumigo": "^1.10.0",
+    "serverless-prune-plugin": "^1.4.3",
+    "serverless-pseudo-parameters": "^2.5.0"
+  },
+  "dependencies": {}
+}
