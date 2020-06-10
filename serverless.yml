@@ -2,33 +2,26 @@ service: sls-data-pipe-glue-orch
 
 plugins:
   - serverless-iam-roles-per-function
-  - serverless-lumigo
   - serverless-pseudo-parameters
   - serverless-prune-plugin
 
 custom:
   crawlerName: parquet-crawler
-  lumigo:
-    token: ${ssm:/lumigo/token}
-    nodePackageManager: npm
   prune:
     automatic: true
     number: 3
 provider:
   name: aws
   runtime: nodejs12.x
-#  profile: cloudway-nick
+  profile: cloudway-nick
   stage: dev
   region: eu-west-1
 
 # you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+  include:
+    - node_modules/**
+    - src/**
 
 functions:
   startGlueCrawler:
@@ -45,7 +38,7 @@ functions:
           - arn:aws:glue:#{AWS::Region}:#{AWS::AccountId}:crawler/*
     events:
       - schedule:
-          rate: cron(15 * * * ? *)
+          rate: cron(15 * * * ? *) # is triggered 15 minutes after every hour
           enabled: true
   startGlueETLJob:
     handler: src/StartGlueETLJob/handler.handle

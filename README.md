@@ -21,6 +21,3 @@ Hence, we'll be using `EventBridge` to listen for that event and a `Lambda` to k
 
 ## Development
 * deploy: `sls deploy -v`
-
-Note: This project is instrumented with Lumigo in order to improve observability.
-If you do not need this, you can remove the Lumigo serverless plugin.
